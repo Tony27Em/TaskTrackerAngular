@@ -1,0 +1,29 @@
+<div class="container">
+  <nav class="nav">
+    <h1 class="nav__logo">Task Manager</h1>
+
+    <div class="nav__links">
+      <a 
+        routerLink="" 
+        routerLinkActive="active-link" 
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon class="mat-icon">dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a 
+        routerLink="tasks" 
+        routerLinkActive="active-link"
+      >
+        <mat-icon class="mat-icon">list</mat-icon>
+        <span>All Tasks</span>
+      </a>
+    </div>
+
+    <div class="nav__footer">&#169; Copyright 2024, Em A.G.</div>
+  </nav>
+
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

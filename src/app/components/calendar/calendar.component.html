@@ -1,0 +1,27 @@
+<div class="calendar">
+
+  <div class="calendar__header">
+    <div class="calendar__date">{{ month }} {{ year }}</div>
+    <div class="calendar__buttons">
+      <button (click)="handlePrev()"><mat-icon>chevron_left</mat-icon></button>
+      <button (click)="handleNext()"><mat-icon>chevron_right</mat-icon></button>
+    </div>
+  </div>
+
+  <div class="calendar__weekdays">
+    <div *ngFor="let day of WEEKDAYS">{{ day }}</div>
+  </div>
+
+  <div class="calendar__days">
+    <div 
+      *ngFor="let item of days"
+      [ngClass]="{ 
+        'current-month': item.isCurrentMonth,
+        'today': item.isToday
+      }"
+    >
+      {{ item.day }}
+    </div>
+  </div>
+
+</div>

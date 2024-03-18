@@ -1,0 +1,75 @@
+.calendar {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 20px;
+  border: 1px solid #000;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__date {
+    font-size: 1.5em;
+    font-weight: 700;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+ 
+    & > button {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background-color: #fd9938;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 500;
+      display: grid;
+      place-items: center;
+      transition: 0.1s;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__weekdays, 
+  &__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    font-weight: 500;
+    color: #c7c5c5;
+
+    & > div {
+      text-align: center;
+      width: auto;
+      aspect-ratio: 1/1;
+      display: grid;
+      place-items: center;
+    }
+  }
+
+  &__weekdays {
+    color: #000;
+    font-weight: 700;
+  }
+}
+
+.current-month {
+  color: #000;
+}
+
+.today {
+  background-color: #fd9938;
+  border-radius: 50%;
+  color: #fff;
+}
