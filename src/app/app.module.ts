@@ -14,6 +14,8 @@ import { CalendarComponent } from './components/calendar/calendar.component'
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { MatSortModule } from '@angular/material/sort';
     HttpClientModule,
     MatIconModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule,
+    MatFormFieldModule,
   ],
   providers: [
     provideAnimationsAsync()

@@ -1,26 +1,44 @@
 <div class="all-tasks">
-  <div class="all-tasks__header">All Tasks</div>
+  <div class="all-tasks__header">
+    <div>All Tasks</div>
+    <div class="all-tasks__filter">
+      <div>Filter:</div>
+      <select name="" id="">
+        <option value="">asd</option>
+        <option value="">asd</option>
+        <option value="">asd</option>
+        <option value="">asd</option>
+      </select>
+    </div>
+  </div>
 
-  <table class="all-tasks__list">
-    <thead class="all-tasks__list__header">
+  <table class="all-tasks__table">
+    <thead class="all-tasks__table__header">
       <td *ngFor="let header of headers">
-        <span>{{ header | titlecase }}</span>
-        <button 
-          *ngIf="!['task ID', 'performers'].includes(header)"
-          (click)="onSort(header)"
-        >
-          sort
-        </button>
+        <div>
+          <span>{{ header | titlecase }}</span>
+          <button 
+            *ngIf="!['task ID', 'performers'].includes(header)"
+            (click)="toggleSortOrder(header)"
+          >          
+            <mat-icon>{{ sortOrder.icon }}</mat-icon>
+          </button>
+      </div>
       </td>      
     </thead>
 
-    <tbody *ngFor="let task of allTasks">
+    <tbody *ngFor="let task of allTasksSortable">
       <tr>
         <td>{{ task.id }}</td>
         <td>{{ task.title }}</td>
         <td>{{ task.description }}</td>
         <td>{{ task.deadline }}</td>
-        <td>{{ task.priority }}</td>
+        <td>
+          <div class="all-tasks__priority">
+            <span [ngStyle]="{ backgroundColor: task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'orange' : 'green'}"></span>
+            <span>{{ task.priority | titlecase }}</span>
+          </div>
+        </td>
         <td>{{ task.status }}</td>
         <td class="all-tasks__performers">
           <img 

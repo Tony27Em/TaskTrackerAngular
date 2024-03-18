@@ -7,3 +7,8 @@ export type TaskType = {
   status: string,
   performersID: Array<number>
 }
+
+export type SortOrderType = {
+  order: 'original' | 'ascending' | 'descending',
+  icon: 'list' | 'arrow_upward' | 'arrow_downward',
+}
