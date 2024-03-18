@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Anton", "avatar": "man.png" },
+  { "id": 2, "name": "Bob", "avatar": "man-1.png" },
+  { "id": 3, "name": "Charlie", "avatar": "" },
+  { "id": 4, "name": "Alice", "avatar": "woman.png" },
+  { "id": 5, "name": "Eva", "avatar": "woman-1.png" },
+  { "id": 6, "name": "Taylor", "avatar": "woman-2.png" },
+  { "id": 7, "name": "Ally", "avatar": "woman-3.png" }
+]

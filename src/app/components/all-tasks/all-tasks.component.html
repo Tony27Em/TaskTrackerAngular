@@ -1,1 +1,35 @@
-<p>all-tasks works!</p>
+<div class="all-tasks">
+  <div class="all-tasks__header">All Tasks</div>
+
+  <table class="all-tasks__list">
+    <thead class="all-tasks__list__header">
+      <td *ngFor="let header of headers">
+        <span>{{ header | titlecase }}</span>
+        <button 
+          *ngIf="!['task ID', 'performers'].includes(header)"
+          (click)="onSort(header)"
+        >
+          sort
+        </button>
+      </td>      
+    </thead>
+
+    <tbody *ngFor="let task of allTasks">
+      <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.title }}</td>
+        <td>{{ task.description }}</td>
+        <td>{{ task.deadline }}</td>
+        <td>{{ task.priority }}</td>
+        <td>{{ task.status }}</td>
+        <td class="all-tasks__performers">
+          <img 
+            *ngFor="let avatar of getPerformersAvatar(task)"
+            [src]="'../../assets/' + avatar" 
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

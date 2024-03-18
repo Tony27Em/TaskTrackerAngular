@@ -1,0 +1,34 @@
+.all-tasks {
+  &__header {
+    font-size: 2em;
+    font-weight: 700;
+    margin-block: 30px;
+    margin-left: 20px;
+  }
+
+  &__list {
+    border-collapse: collapse;
+
+    &__header td {
+      font-weight: 700;
+    }
+
+    &__header td,
+    & tbody tr td {
+      padding: 10px 20px;
+      border: 1px solid #ddd;
+    }
+  }
+
+  &__performers {
+    & > img {
+      width: 64px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px #fff;
+    }
+
+    & > img:not(:first-of-type) {
+      margin-left: -20px;
+    }
+  }
+}
