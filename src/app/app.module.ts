@@ -16,6 +16,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatSortModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatMenuModule,
+    MatButtonModule,
   ],
   providers: [
     provideAnimationsAsync()

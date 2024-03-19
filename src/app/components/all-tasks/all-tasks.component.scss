@@ -38,6 +38,26 @@
     }
   }
 
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    & button {
+      padding: 3px;
+      display: grid;
+      place-items: center;
+      border: none;
+      border-radius: 5px;
+      background: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lightgray;
+      } 
+    }
+  }
+
   &__priority {
     display: flex;
     align-items: center;

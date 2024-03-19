@@ -9,6 +9,7 @@ export type TaskType = {
 }
 
 export type SortOrderType = {
+  header?: string,
   order: 'original' | 'ascending' | 'descending',
   icon: 'list' | 'arrow_upward' | 'arrow_downward',
 }

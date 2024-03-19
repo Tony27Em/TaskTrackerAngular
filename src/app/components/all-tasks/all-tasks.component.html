@@ -1,15 +1,6 @@
 <div class="all-tasks">
   <div class="all-tasks__header">
     <div>All Tasks</div>
-    <div class="all-tasks__filter">
-      <div>Filter:</div>
-      <select name="" id="">
-        <option value="">asd</option>
-        <option value="">asd</option>
-        <option value="">asd</option>
-        <option value="">asd</option>
-      </select>
-    </div>
   </div>
 
   <table class="all-tasks__table">
@@ -17,17 +8,35 @@
       <td *ngFor="let header of headers">
         <div>
           <span>{{ header | titlecase }}</span>
-          <button 
-            *ngIf="!['task ID', 'performers'].includes(header)"
-            (click)="toggleSortOrder(header)"
-          >          
-            <mat-icon>{{ sortOrder.icon }}</mat-icon>
-          </button>
+
+          <div class="all-tasks__buttons">
+            <div *ngIf="!['task ID', 'title', 'description'].includes(header)">
+              <button [matMenuTriggerFor]="menu">
+                <mat-icon class="all-tasks__buttons__filter">filter_list</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button 
+                  mat-menu-item
+                  *ngFor="let option of filterOptions[header]"
+                  (click)="onFilter(option, header)"
+                >
+                  {{ option | titlecase }}
+                </button>
+              </mat-menu> 
+            </div>
+
+            <button 
+              *ngIf="!['task ID', 'performers'].includes(header)"
+              (click)="onSort(header)"
+            >          
+              <mat-icon class="all-tasks__buttons__sort">{{ setSortIcon(header) }}</mat-icon>
+            </button>
+          </div>
       </div>
       </td>      
     </thead>
 
-    <tbody *ngFor="let task of allTasksSortable">
+    <tbody *ngFor="let task of allTasksChangeable">
       <tr>
         <td>{{ task.id }}</td>
         <td>{{ task.title }}</td>
