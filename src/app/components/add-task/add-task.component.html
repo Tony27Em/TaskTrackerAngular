@@ -1,0 +1,56 @@
+<div class="add-task">
+  <div class="add-task__header">Create new task</div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <mat-label>Title</mat-label>
+      <input 
+        matInput 
+        placeholder="Enter title" 
+        value="" 
+        required 
+        formControlName="title"
+      >
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Enter description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Deadline</mat-label>
+      <input  
+        matInput 
+        [matDatepicker]="picker" 
+        required
+        formControlName="deadline"
+      >
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Priority</mat-label>
+      <select matNativeControl required>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Performers</mat-label>
+      <mat-select formControlName="performers" multiple>
+        @for (user of usersList; track user) {
+          <mat-option [value]="user.id">{{user.name}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="add-task__buttons">
+      <button mat-raised-button color="primary" type="submit">Create</button>
+      <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
+    </div>
+  </form>
+</div>

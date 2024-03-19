@@ -1,11 +1,8 @@
 .all-tasks {
   &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    margin: 30px;
     font-size: 2em;
     font-weight: 700;
-    margin: 30px;
   }
 
   &__table {
@@ -55,6 +52,25 @@
       &:hover {
         background-color: lightgray;
       } 
+    }
+  }
+
+  &__description {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    & > a {
+      padding: 3px;
+      border-radius: 5px;
+      color: #5a5a5a;
+      display: grid;
+      place-items: center;
+
+      &:hover {
+        background-color: #e5e5e5;
+      }
     }
   }
 

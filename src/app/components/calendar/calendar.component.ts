@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CalendarService } from './calendar.service';
-import { DayType } from './calendar.model';
+import { CalendarType, DayType } from './calendar.model';
 
 @Component({
   selector: 'app-calendar',
@@ -9,31 +9,31 @@ import { DayType } from './calendar.model';
 })
 
 export class CalendarComponent {
+  WEEKDAYS: Array<string> = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
   days: DayType[] = [];
   month: string = '';
   year: number = 0;
-  WEEKDAYS: Array<string> = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
   constructor(private calendarService: CalendarService) {}
 
   ngOnInit(): void {
     const calendar = this.calendarService.getCalendar();    
-    this.days = calendar.days;
-    this.month = calendar.month;
-    this.year = calendar.year;
+    this.setCalendar(calendar);
   }
 
   handlePrev(): void {
     const prev = this.calendarService.setPrevMonth();
-    this.days = prev.days;
-    this.month = prev.month;
-    this.year = prev.year;
+    this.setCalendar(prev);
   }
   
   handleNext(): void {
     const next = this.calendarService.setNextMonth();
-    this.days = next.days;
-    this.month = next.month;
-    this.year = next.year;
+    this.setCalendar(next);
+  }
+
+  setCalendar(calendar: CalendarType): void {
+    this.days = calendar.days;
+    this.month = calendar.month;
+    this.year = calendar.year;
   }
 }

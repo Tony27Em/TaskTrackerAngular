@@ -1,7 +1,5 @@
 <div class="all-tasks">
-  <div class="all-tasks__header">
-    <div>All Tasks</div>
-  </div>
+  <div class="all-tasks__header">All Tasks</div>
 
   <table class="all-tasks__table">
     <thead class="all-tasks__table__header">
@@ -40,7 +38,12 @@
       <tr>
         <td>{{ task.id }}</td>
         <td>{{ task.title }}</td>
-        <td>{{ task.description }}</td>
+        <td>
+          <div class="all-tasks__description">
+            <span>{{ task.description }}</span>
+            <a [routerLink]="['/tasks', task.id]"><mat-icon>edit</mat-icon></a>
+          </div>
+          </td>
         <td>{{ task.deadline }}</td>
         <td>
           <div class="all-tasks__priority">

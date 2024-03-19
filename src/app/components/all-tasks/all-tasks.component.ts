@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { TaskType, SortOrderType } from '../../models/task.model';
 import { UserType } from '../../models/user.model';
-import { MatSelectChange } from '@angular/material/select';
+import { selectTasks, selectUsers } from '../../state/data.selector';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-all-tasks',
@@ -18,20 +19,25 @@ export class AllTasksComponent {
   sortOrder: SortOrderType[] = [];
   filterOptions: Record<string, Array<string>> = {};
 
-  constructor(private _httpService: HttpService) { }
+  constructor(
+    private _httpService: HttpService,
+    private _store: Store,
+  ) { this.test()}
 
-  ngOnInit(): void {
-    this._httpService.getUsers().subscribe(users => this.users = users);
+  test(): void {
+    this._store.select(selectUsers).subscribe(users => this.users = users);
 
-    this._httpService.getData().subscribe(tasks => {
+    this._store.select(selectTasks).subscribe(tasks => {
       this.allTasksOriginal = tasks;
       this.allTasksChangeable = tasks;
 
-      this.headers = Object.keys(tasks[0]).map(item => {
-        if (item === 'id') return 'task ID';
-        if (item === 'performersID') return 'performers';
-        return item;
-      });
+      if (tasks && !!tasks.length && tasks[0]) {
+        this.headers = Object.keys(tasks[0]).map(item => {
+          if (item === 'id') return 'task ID';
+          if (item === 'performersID') return 'performers';
+          return item;
+        });
+      }
 
       this.sortOrder = this.headers.map(header => {
         return {
@@ -52,15 +58,12 @@ export class AllTasksComponent {
 
   onSort(header: string): void {
     const allTasks = [...this.allTasksOriginal];
+    // const allTasks = [...this.allTasksChangeable];
     const selectedSort = this.sortOrder.find(item => item.header === header)!;
 
     this.sortOrder = this.sortOrder.map(item => {
       if(item.header !== selectedSort.header) {
-        return {
-          ...item,
-          order: 'original',
-          icon: 'list',
-        }
+        return { ...item, order: 'original', icon: 'list' };
       }
       return item;
     })
@@ -92,6 +95,10 @@ export class AllTasksComponent {
       selectedSort.icon = 'list';
     }
   }
+  
+  setSortIcon(header: string): string {
+    return this.sortOrder.find(item => item.header === header)!.icon;
+  }
 
   getPerformersAvatar(task: TaskType): Array<string> {
     return task.performersID.map((id: number) => {
@@ -100,18 +107,17 @@ export class AllTasksComponent {
     })    
   }
 
-  onFilter(option: string, header: string): void {
+  onFilter(option: string, header: string): Array<TaskType> {
     const allTasks = [...this.allTasksOriginal];
     
     if (option === 'none') {
-      this.allTasksChangeable = allTasks;
-      return;
+      return this.allTasksChangeable = allTasks;
     }
 
-    this.allTasksChangeable = allTasks.filter(item => (item as any)[header] === option)
+    return this.allTasksChangeable = allTasks.filter(item => (item as any)[header].includes(option));      
   }
 
-  setSortIcon(header: string): string {
-    return this.sortOrder.find(item => item.header === header)!.icon;
+  onEdit(taskID: string) {
+
   }
 }

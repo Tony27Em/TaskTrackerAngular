@@ -1,0 +1,27 @@
+.add-task {
+  width: 500px;
+  max-width: 1000px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__header {
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+}

@@ -1,0 +1,127 @@
+.dashboard {
+  &__header {
+    margin: 30px;
+    font-size: 2em;
+    font-weight: 700;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(4, min-content);
+    gap: 20px;
+  }
+
+  &__create-button {
+    padding: 10px 20px;
+    width: max-content;
+    height: 50px;
+    color: #fff;
+    background-color: #fd9938;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ffc3a2;
+    }
+  }
+
+  &__tasks {
+    min-width: 600px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 15px #e5e5e5;
+
+    &__header {
+      font-size: 1.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 30px;
+      margin-bottom: 20px;
+    }
+    
+    &__list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 1.2em;
+
+      & > div {
+        padding-block: 10px;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        font-weight: 500;
+        border-bottom: 1px solid lightgray;
+
+        & > div:first-of-type {
+          flex: 1;
+        }
+
+        & > div:nth-child(2) {
+          flex: 10;
+
+          & > a {
+            color: #5a5a5a;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+
+      &__buttons {
+        display: flex;
+        align-items: center;
+
+        & > button {
+          padding: 2px;
+          border: none;
+          border-radius: 5px;
+          background: none;
+          cursor: pointer;
+
+          &:hover {
+            background-color: lightgray;
+          }
+        }
+      }
+    }
+  }
+
+  &__users {
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
+    gap: 15px 50px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 15px #e5e5e5;
+
+    &__header {
+      font-size: 1.5em;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 30px;
+      grid-area: 1/1/2/3;
+    }
+
+    & > div {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      & > img {
+        width: 64px;
+      }
+
+      & > div {
+        font-size: 1.2em;
+        font-weight: 500;
+      }
+    }
+  }
+}
