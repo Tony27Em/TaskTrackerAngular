@@ -1,31 +1,55 @@
 <div class="task">
   <div class="task__header">Task Detail</div>
 
-  <div class="task__content">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
     <mat-form-field class="example-full-width">
       <mat-label>Title</mat-label>
-      <input matInput placeholder="Ex. Pizza" value="Sushi">
+      <input 
+        matInput 
+        placeholder="Enter title" 
+        required 
+        formControlName="title"
+      >
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
       <mat-label>Description</mat-label>
-      <input matInput placeholder="Ex. Pizza" value="Sushi">
+      <textarea formControlName="description" matInput placeholder="Enter description"></textarea>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <mat-label>Deadline</mat-label>
-      <input matInput placeholder="Ex. Pizza" value="Sushi">
+      <input  
+        matInput 
+        [matDatepicker]="picker" 
+        required
+        formControlName="deadline"
+      >
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>priority</mat-label>
-      <input matInput placeholder="Ex. Pizza" value="Sushi">
+    <mat-form-field>
+      <mat-label>Priority</mat-label>
+      <select formControlName="priority" matNativeControl required>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <mat-label>Status</mat-label>
-      <input matInput placeholder="Ex. Pizza" value="Sushi">
+    <mat-form-field>
+      <mat-label>Performers</mat-label>
+      <mat-select formControlName="performers" multiple>
+        @for (user of users$ | async; track user) {
+          <mat-option [value]="user.id">{{user.name}}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
-  </div>
 
+    <div class="task__buttons">
+      <button mat-raised-button color="primary" type="submit">Edit</button>
+      <button mat-raised-button color="warn" (click)="onCancel($event)">Cancel</button>
+    </div>
+  </form>  
 </div>

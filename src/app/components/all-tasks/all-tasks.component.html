@@ -30,21 +30,28 @@
               <mat-icon class="all-tasks__buttons__sort">{{ setSortIcon(header) }}</mat-icon>
             </button>
           </div>
-      </div>
+        </div>  
       </td>      
     </thead>
 
     <tbody *ngFor="let task of allTasksChangeable">
       <tr>
         <td>{{ task.id }}</td>
-        <td>{{ task.title }}</td>
+        <td>{{ task.title | titlecase }}</td>
         <td>
           <div class="all-tasks__description">
-            <span>{{ task.description }}</span>
-            <a [routerLink]="['/tasks', task.id]"><mat-icon>edit</mat-icon></a>
+            <span>{{ task.description | titlecase }}</span>
+            <div>
+              <a [routerLink]="['/tasks', task.id]">
+                <mat-icon>info</mat-icon>
+              </a>
+              <button (click)="onDelete(task.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </div>
           </td>
-        <td>{{ task.deadline }}</td>
+        <td>{{ task.deadline | date }}</td>
         <td>
           <div class="all-tasks__priority">
             <span [ngStyle]="{ backgroundColor: task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'orange' : 'green'}"></span>

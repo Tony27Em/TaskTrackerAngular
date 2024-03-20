@@ -61,14 +61,32 @@
     justify-content: space-between;
     gap: 20px;
 
-    & > a {
-      padding: 3px;
-      border-radius: 5px;
-      color: #5a5a5a;
-      display: grid;
-      place-items: center;
+    & > div {    
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-      &:hover {
+      & > a {
+        padding: 3px;
+        border-radius: 5px;
+        color: #5a5a5a;
+        display: grid;
+        place-items: center;
+      }
+
+      & > button {
+        padding: 3px;
+        border: none;
+        border-radius: 5px;
+        background: none;
+        color: #5a5a5a;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+      }
+
+      & > a:hover,
+      & > button:hover {
         background-color: #e5e5e5;
       }
     }

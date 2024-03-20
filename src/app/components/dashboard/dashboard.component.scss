@@ -7,7 +7,7 @@
 
   &__content {
     display: grid;
-    grid-template-columns: repeat(4, min-content);
+    grid-template-columns: repeat(3, min-content);
     gap: 20px;
   }
 
@@ -78,11 +78,22 @@
         align-items: center;
 
         & > button {
-          padding: 2px;
+          padding: 3px;
+          display: grid;
+          place-items: center;
           border: none;
           border-radius: 5px;
           background: none;
+          color: #5a5a5a;
           cursor: pointer;
+        }
+
+        & > a, button {
+          display: grid;
+          place-items: center;
+          padding: 3px;
+          color: #5a5a5a;
+          border-radius: 5px;
 
           &:hover {
             background-color: lightgray;

@@ -5,7 +5,7 @@ import { AddTaskComponent } from '../add-task/add-task.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
 import { selectTasks, selectUsers } from '../../state/data.selector';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
+import { TasksAction } from '../../state/data.action';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +23,7 @@ export class DashboardComponent {
     private _store: Store,
   ) { }
   
-  ngOnInit() {
+  ngOnInit(): void {
     this._store.select(selectTasks).subscribe(tasks => {
       return this.myTasks = tasks.filter(item => item.performersID.includes(this.myID));
     });
@@ -31,12 +31,10 @@ export class DashboardComponent {
   } 
 
   openModal(): void {
-    const dialogRef = this._dialog.open(AddTaskComponent, {
-      data: { message: 'test' },
-    });
+    this._dialog.open(AddTaskComponent);
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+  onDelete(taskID: string): void {
+    this._store.dispatch(TasksAction.removeTask({ taskID }));
   }
 }

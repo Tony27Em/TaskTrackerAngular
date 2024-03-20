@@ -32,7 +32,7 @@
 
     <mat-form-field>
       <mat-label>Priority</mat-label>
-      <select matNativeControl required>
+      <select formControlName="priority" matNativeControl required>
         <option value="low">Low</option>
         <option value="medium">Medium</option>
         <option value="high">High</option>
@@ -43,14 +43,14 @@
       <mat-label>Performers</mat-label>
       <mat-select formControlName="performers" multiple>
         @for (user of usersList; track user) {
-          <mat-option [value]="user.id">{{user.name}}</mat-option>
+          <mat-option [value]="user.id">{{ user.name }}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
     <div class="add-task__buttons">
       <button mat-raised-button color="primary" type="submit">Create</button>
-      <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
+      <button mat-raised-button color="warn" (click)="onClose()">Cancel</button>
     </div>
   </form>
 </div>

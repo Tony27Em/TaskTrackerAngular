@@ -9,4 +9,5 @@ export const tasksReducer = createReducer(
   on(TasksAction.retrievedTasks, (_state, { tasks }) => tasks),
   on(TasksAction.addTask, (state, { task }) => [...state, task]),
   on(TasksAction.removeTask, (state, { taskID }) => state.filter(item => item.id !== taskID)),
+  on(TasksAction.editTask, (state, { task }) => state.map(item => item.id !== task.id ? item : task )),
 )

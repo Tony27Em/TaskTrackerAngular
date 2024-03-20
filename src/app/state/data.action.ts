@@ -8,6 +8,7 @@ export const TasksAction = createActionGroup({
     'Retrieved Tasks': props<{ tasks: Array<TaskType> }>(),
     'Add Task': props<{ task: TaskType }>(),
     'Remove Task': props<{ taskID: string }>(),
+    'Edit Task': props<{ task: TaskType }>(),
   }
 })
 

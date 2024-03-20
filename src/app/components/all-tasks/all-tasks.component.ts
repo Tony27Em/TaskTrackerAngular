@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { HttpService } from '../../services/http.service';
 import { TaskType, SortOrderType } from '../../models/task.model';
 import { UserType } from '../../models/user.model';
 import { selectTasks, selectUsers } from '../../state/data.selector';
 import { Store, select } from '@ngrx/store';
+import { TasksAction } from '../../state/data.action';
 
 @Component({
   selector: 'app-all-tasks',
@@ -18,13 +18,12 @@ export class AllTasksComponent {
   users: Array<UserType> = [];
   sortOrder: SortOrderType[] = [];
   filterOptions: Record<string, Array<string>> = {};
+  selectedFilterOption: string = '';
+  selectedSortOption: string = '';  
 
-  constructor(
-    private _httpService: HttpService,
-    private _store: Store,
-  ) { this.test()}
+  constructor(private _store: Store) { }
 
-  test(): void {
+  ngOnInit(): void {
     this._store.select(selectUsers).subscribe(users => this.users = users);
 
     this._store.select(selectTasks).subscribe(tasks => {
@@ -48,17 +47,22 @@ export class AllTasksComponent {
       })
 
       this.filterOptions = {
-        deadline: ['none', ...new Set(tasks.map(item => item.deadline))],
+        deadline: ['none', ...new Set(tasks.map(item => {
+          return new Date(item.deadline).toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: '2-digit', 
+            year: 'numeric' 
+          })
+        }))],
         priority: ['none', ...new Set(tasks.map(item => item.priority))],
         status: ['none', ...new Set(tasks.map(item => item.status))],
-        performers: ['none', ...this.users.map(user => user.name)],
+        performers: ['none', ...this.users.map(user => user.name)], 
       }
     })
   }
 
   onSort(header: string): void {
-    const allTasks = [...this.allTasksOriginal];
-    // const allTasks = [...this.allTasksChangeable];
+    const allTasks = [...this.allTasksChangeable];
     const selectedSort = this.sortOrder.find(item => item.header === header)!;
 
     this.sortOrder = this.sortOrder.map(item => {
@@ -78,7 +82,11 @@ export class AllTasksComponent {
         this.allTasksChangeable = allTasks.sort((a: TaskType, b: TaskType) => ((b as any)[header]).localeCompare((a as any)[header]));
         break;
       case 'original':
-        this.allTasksChangeable = allTasks;
+        if (!this.selectedFilterOption) {
+          this.allTasksChangeable = this.allTasksOriginal;
+        } else {
+          this.allTasksChangeable = this.onFilter(this.selectedFilterOption, this.selectedSortOption);
+        }
         break;
     }
   }
@@ -108,16 +116,30 @@ export class AllTasksComponent {
   }
 
   onFilter(option: string, header: string): Array<TaskType> {
-    const allTasks = [...this.allTasksOriginal];
-    
-    if (option === 'none') {
-      return this.allTasksChangeable = allTasks;
-    }
+    this.selectedFilterOption = option;
+    this.selectedSortOption = header;  
+    const allTasks = [...this.allTasksOriginal];  
 
-    return this.allTasksChangeable = allTasks.filter(item => (item as any)[header].includes(option));      
+    if (option === 'none') return this.allTasksChangeable = allTasks;
+
+    return this.allTasksChangeable = allTasks.filter(item => {
+      if (header !== 'deadline' && header !== 'performers') {
+        return (item as any)[header] === option;
+      } else if (header === 'deadline') {
+        return new Date((item as any)[header]).toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: '2-digit', 
+          year: 'numeric' 
+        }) === option;
+      } else if (header === 'performers') {
+        return (item as any)[header + 'ID'].includes(this.users.find(item => item.name === option)?.id);
+      }
+
+      return item;
+    })
   }
 
-  onEdit(taskID: string) {
-
+  onDelete(taskID: string) {
+    this._store.dispatch(TasksAction.removeTask({ taskID }));
   }
 }

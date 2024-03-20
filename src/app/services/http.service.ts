@@ -16,12 +16,12 @@ export class HttpService {
   ) { }
 
   sendDataToStore(): void {
-    this._http.get<Array<TaskType>>('../assets/fakedata/tasks.json').subscribe(tasks => {
-      this._store.dispatch(TasksAction.retrievedTasks({ tasks }));
-    })
-
     this._http.get<Array<UserType>>('../assets/fakedata/users.json').subscribe(users => {
       this._store.dispatch(UserAction.retrievedUsers({ users }));
     })  
+
+    this._http.get<Array<TaskType>>('../assets/fakedata/tasks.json').subscribe(tasks => {
+      this._store.dispatch(TasksAction.retrievedTasks({ tasks }));
+    })
   }
 }

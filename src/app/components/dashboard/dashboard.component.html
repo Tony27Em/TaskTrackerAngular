@@ -2,39 +2,44 @@
   <div class="dashboard__header">Dashboard</div>
 
   <div class="dashboard__content">
-    <button class="dashboard__create-button" (click)="openModal()">
-      Create new task
-    </button>
-
     <div class="dashboard__tasks">
       <div class="dashboard__tasks__header">
         <span>My Tasks&nbsp;</span>
-        <span>({{ myTasks.length.toString().padStart(2, '0') }})</span>
+        <span>({{ !!myTasks.length ? myTasks.length.toString().padStart(2, '0') : 0 }})</span>
       </div>
 
       <div class="dashboard__tasks__list">
-        <div *ngFor="let task of myTasks; let i = index">
-          <div>{{ (i + 1).toString().padStart(2, '0') }}</div>
-          <div>
-            <a [routerLink]="['/tasks', task.id]">{{ task.title }}</a>
+        <ng-container *ngIf="!!myTasks.length">
+          <div *ngFor="let task of myTasks; let i = index">
+            <div>{{ (i + 1).toString().padStart(2, '0') }}</div>
+            <div>{{ task.title | titlecase }}</div>
+            <div>{{ task.status }}</div>
+            <div class="dashboard__tasks__list__buttons">
+              <a [routerLink]="['/tasks', task.id]"><mat-icon>info</mat-icon></a>
+              <button (click)="onDelete(task.id)"><mat-icon>delete</mat-icon></button>
+            </div>
           </div>
-          <div>{{ task.status }}</div>
-          <div class="dashboard__tasks__list__buttons">
-            <!-- <button (click)="onEdit(task.id)"><mat-icon>edit</mat-icon></button> -->
-            <!-- <button (click)="onDelete(task.id)"><mat-icon>delete</mat-icon></button> -->
-          </div>
-        </div>
+        </ng-container>
+
+        <div 
+          *ngIf="!myTasks.length"
+          style="justify-content: center;"
+        >NO TASKS</div>
       </div>
     </div>
-
-    <!-- <div class="dashboard__users">
+    
+    <div class="dashboard__users">
       <span class="dashboard__users__header">Users</span>
       <div *ngFor="let user of users">
         <img [src]="'../../assets/' + (user.avatar || 'user.png')" alt="">
         <div>{{ user.name }}</div>
       </div>
-    </div> -->
+    </div>
 
     <app-calendar></app-calendar>
+
+    <button class="dashboard__create-button" (click)="openModal()">
+      Create new task
+    </button>
   </div>
 </div>

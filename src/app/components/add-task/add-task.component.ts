@@ -1,17 +1,11 @@
-import { Component, Inject } from '@angular/core';
-
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserType } from '../../models/user.model';
-import { HttpService } from '../../services/http.service';
-
 import { Store, select } from '@ngrx/store';
 import { selectUsers } from '../../state/data.selector';
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
+import { TasksAction } from '../../state/data.action';
+import { TaskType } from '../../models/task.model';
 
 @Component({
   selector: 'app-add-task',
@@ -25,11 +19,9 @@ export class AddTaskComponent {
   usersList: Array<UserType> = [];
 
   constructor(
-    private _httpService: HttpService,
-    public dialogRef: MatDialogRef<AddTaskComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private _formBuilder: FormBuilder,
     private _store: Store,
+    private _formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<AddTaskComponent>,
   ) {
     this.taskForm = this._formBuilder.group({
       title: ['', Validators.required],
@@ -41,20 +33,34 @@ export class AddTaskComponent {
   }
 
   ngOnInit() {
-    // this._httpService.getUsers().subscribe(users => this.usersList = users);
-
     this._store.select(selectUsers).subscribe(users => this.usersList = users)
   }
 
-  onNoClick(): void {
+  onClose(): void {
     this.dialogRef.close();
   }
 
   onSubmit() {
     if (!this.taskForm.valid) return;
-
     this.dialogRef.close();
-    console.log(this.taskForm.value);
-      
+
+    const task: TaskType = {
+      id: Math.random().toString().replace(/\./g, '').slice(0, 10),
+      title: this.taskForm.get('title')!.value,
+      description: this.taskForm.get('description')!.value,
+      deadline: this.formatDate(this.taskForm.get('deadline')!.value),
+      priority: this.taskForm.get('priority')!.value,
+      status: 'Planned',
+      performersID: this.taskForm.get('performers')!.value,
+    }
+
+    this._store.dispatch(TasksAction.addTask({ task }));
+  }
+
+  formatDate(date: Date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
   }
 }
